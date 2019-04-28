@@ -17,6 +17,6 @@ public class DefaultAuditorAware implements AuditorAware<String> {
 
 	@Override
 	public Optional<String> getCurrentAuditor() {
-		return Optional.of("Thanos");
+		return Optional.of("system");
 	}
 }

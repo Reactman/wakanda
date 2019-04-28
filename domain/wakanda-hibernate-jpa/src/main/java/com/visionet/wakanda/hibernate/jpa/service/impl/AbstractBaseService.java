@@ -39,32 +39,32 @@ public class AbstractBaseService<M extends BaseEntity, ID> implements BaseServic
 	}
 
 	@Override
-	public void delete(Object o) {
-
+	public void delete(M m) {
+		this.customizeRepository.delete(m);
 	}
 
 	@Override
-	public void delete(BaseEntity baseEntity) {
-
+	public void delete(ID id) {
+		this.customizeRepository.deleteById(id);
 	}
 
 	@Override
-	public M findOne(Object o) {
-		return null;
+	public M findOne(ID id) {
+		return this.customizeRepository.getOne(id);
 	}
 
 	@Override
-	public List findAll() {
-		return null;
+	public List<M> findAll() {
+		return this.customizeRepository.findAll();
 	}
 
 	@Override
-	public List findAll(Sort sort) {
-		return null;
+	public List<M> findAll(Sort sort) {
+		return this.customizeRepository.findAll(sort);
 	}
 
 	@Override
 	public long count() {
-		return 0;
+		return this.customizeRepository.count();
 	}
 }

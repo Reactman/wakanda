@@ -9,6 +9,7 @@ import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.domain.Persistable;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -20,11 +21,11 @@ import java.util.Date;
  */
 @EntityListeners(AuditingEntityListener.class)
 @MappedSuperclass
-public abstract class BaseEntity<T> {
+public abstract class BaseEntity<T> implements Persistable<T> {
 
 	@Id
-	@GenericGenerator(name = "sys_uuid", strategy = "guid")
-	@GeneratedValue(generator = "sys_uuid")
+	@GenericGenerator(name = "system-uuid", strategy = "guid")
+	@GeneratedValue(generator = "system-uuid")
 	private T id;
 
 	@CreatedBy
@@ -47,6 +48,11 @@ public abstract class BaseEntity<T> {
 	private Integer version;
 
 	private Boolean isDeleted = false;
+
+	@Override
+	public boolean isNew() {
+		return (getId() == null || "".equals(getId().toString().trim()));
+	}
 
 	public T getId() {
 		return id;
