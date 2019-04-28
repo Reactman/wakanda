@@ -7,6 +7,7 @@ package com.visionet.wakanda.hibernate.jpa.service.impl;
 import com.visionet.wakanda.hibernate.jpa.entity.BaseEntity;
 import com.visionet.wakanda.hibernate.jpa.repository.BaseRepository;
 import com.visionet.wakanda.hibernate.jpa.service.BaseService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class AbstractBaseService<M extends BaseEntity, ID> implements BaseServic
 	private BaseRepository<M, ID> customizeRepository;
 
 	@Override
+	@Autowired
 	public void setBaseRepository(BaseRepository<M, ID> baseRepository) {
 		this.customizeRepository = baseRepository;
 	}
@@ -29,13 +31,13 @@ public class AbstractBaseService<M extends BaseEntity, ID> implements BaseServic
 	}
 
 	@Override
-	public M save(BaseEntity baseEntity) {
-		return null;
+	public M save(M entity) {
+		return this.customizeRepository.save(entity);
 	}
 
 	@Override
-	public boolean exist(Object o) {
-		return false;
+	public boolean exist(ID id) {
+		return this.customizeRepository.existsById(id);
 	}
 
 	@Override
